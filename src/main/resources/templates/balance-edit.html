@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/authenticated.html}">
+<head>
+<meta charset="UTF-8">
+<title>Edit View</title>
+</head>
+<body>
+	<div layout:fragment="content">
+	
+		<!-- Add Detail -->
+		<div class="card mt-2">
+			<div class="card-header"><i class="bi-plus"></i> Add <span th:text="${balanceEditForm.header.type}"></span></div>
+			<div class="card-body">
+				<form th:action="@{/user/balance-edit/add-item}" method="post" th:object="${itemForm}">
+					<div class="row">
+						<div class="col-4">
+							<input type="text" th:field="*{item}" class="form-control" placeholder="Enter Item Name"
+							th:classappend="${#fields.hasErrors('item')} ? 'is-invalid'" />
+							<div class="invalid-feedback" th:errors="*{item}"></div>
+						</div>
+						<div class="col-2">
+							<input type="number" th:field="*{unitPrice}" class="form-control" placeholder="Unit Price"
+							th:classappend="${#fields.hasErrors('unitPrice')} ? 'is-invalid'" />
+							<div class="invalid-feedback" th:errors="*{unitPrice}"></div>
+						</div>
+						<div class="col-2">
+							<input type="number" th:field="*{quantity}" class="form-control" placeholder="Quantity" 
+							th:classappend="${#fields.hasErrors('quantity')} ? 'is-invalid'"/>
+							<div class="invalid-feedback" th:errors="*{quantity}"></div>
+						</div>
+						<div class="col">
+							<button class="btn btn-primary"><i class="bi-plus"></i> Add Detail</button>
+							<a th:if="${balanceEditForm.isShowNextBtn()}" th:href="@{/user/balance-edit/confirm}" class="btn btn-secondary"><i class="bi-arrow-right"></i> Next</a>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- Detail List -->
+		
+		<div th:include="/fragments/component :: balanceItemList(${balanceEditForm},true)"></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/authenticated.html}">
+<head>
+<meta charset="UTF-8">
+<title>Detail</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="card">
+			<div class="card-header">Balance Summary</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-auto">
+						<span class="form-control" th:text="${vo.header.date}">22/03/21</span>
+					</div>
+					<div class="col-auto">
+						<span class="form-control" th:text="${vo.header.type}">Incomes</span>
+					</div>
+					<div class="col-auto">
+						<span class="form-control" th:text="${vo.header.category}">Student
+							Registration</span>
+					</div>
+					<div class="col-auto">
+						<a th:href="@{/user/balance-edit(id=${vo.header.id})}" class="btn btn-primary"><i
+							class="bi-pencil"></i> Edit Detail</a> <a
+							th:href="@{/user/balance/delete/}+${vo.header.id}" class="btn btn-danger"><i
+							class="bi-x"></i> Delete</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div
+			th:include="/fragments/component:: balanceItemList(${vo},false)"></div>
+
+	</div>
+</body>
+</html>

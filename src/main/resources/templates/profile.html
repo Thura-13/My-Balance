@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{/layout/authenticated.html}">
+<head>
+<meta charset="UTF-8">
+<title>Profile</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="row">
+			<div class="col">
+				<div class="card">
+					<div class="card-header">Profile</div>
+					<div class="card-body">
+
+						<div class="input-group">
+							<div class="input-group-text">
+								<span><i class="bi-person"></i></span>
+							</div>
+							<span class="form-control" th:text="${user.name}">User Name</span>
+						</div>
+						
+						<div class="input-group mt-3">
+							<div class="input-group-text">
+								<span><i class="bi-lock"></i></span>
+							</div>
+							<span class="form-control" th:text="${user.loginId}">Login Id</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					
+					<div class="card-header d-flex justify-content-between">
+					Contact
+					<span>
+						<a href="#" data-bs-toggle="modal" data-bs-target="#contactInfo" ><i class="bi-pencil"></i></a>
+					</span>
+					</div>
+					
+					<div class="card-body">
+						
+						<div class="input-group">
+							<div class="input-group-text">
+								<span><i class="bi-telephone"></i></span>
+							</div>
+							<span class="form-control" th:text="${user.phone} ?: 'Undefine'">Phone</span>
+						</div>
+						
+						<div class="input-group mt-3">
+							<div class="input-group-text">
+								<span><i class="bi-envelope"></i></span>
+							</div>
+							<span class="form-control" th:text="${user.email} ?: 'Undefine'">Email</span>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card">
+			<div class="card-header"><i class="bi-activity"></i> Access Logs</div>
+			<div class="card-body">
+				<table class="table table-stripe">
+					<thead>
+						<tr>
+							<th>LoginId</th>
+							<th>Access Type</th>
+							<th>Time</th>
+							<th>Error Message</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="accessLog : ${list}">
+							<td th:text="${accessLog.username}">Member</td>
+							<td th:text="${accessLog.type}">Member</td>
+							<td th:text="${#temporals.format(accessLog.accessTime,'yyyy-MM-dd HH:mm:ss')}">11:45 PM</td>
+							<td th:text="${accessLog.errorMessage}"></td>
+						</tr>
+					</tbody>
+				</table>
+				<div th:include="/fragments/component :: pagination(${pagination})"></div>
+			</div>
+		</div>
+		
+	<div th:replace="/fragments/modal :: contactInfo"></div>
+	</div>
+</body>
+</html>

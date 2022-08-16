@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/anonymous.html}">
+<head>
+<meta charset="UTF-8">
+<title>Sign UP</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<h3 class="text-center mb-3">Balance Management</h3>
+		<div class="card">
+			<div class="card-header"><i class="bi-person-check"></i> Sign Up</div>
+			<div class="card-body">
+				<form th:action="@{/signup}" th:object="${form}" method="post">
+					<div>
+						<label for="">Name</label>
+						<div class="input-group">
+							<div class="input-group-text">
+								<span class="bi-person"></span>
+							</div>
+							<input th:field="*{name}" type="text" class="form-control"
+								placeholder="Enter Name" 
+							 th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'" />
+							<div class="invalid-feedback" th:errors="*{name}"></div>
+						</div>
+					</div>
+					<div>
+						<label for="">Login Id</label>
+						<div class="input-group">
+							<div class="input-group-text">
+								<span class="bi-lock"></span>
+							</div>
+							<input th:field="*{loginId}" type="text" class="form-control"
+								placeholder="Enter Login Id" 
+								th:classappend="${#fields.hasErrors('loginId')} ? 'is-invalid'"/>
+								<div class="invalid-feedback" th:errors="*{loginId}"></div>
+						</div>
+					</div>
+					<div class="mt-3">
+						<label for="">Password</label>
+						<div class="input-group">
+							<div class="input-group-text">
+								<span class="bi-key"></span>
+							</div>
+							<input th:field="*{password}"  type="password" class="form-control"
+								placeholder="Enter Login Password" 
+								th:classappend="${#fields.hasErrors('password')} ? 'is-invalid'"/>
+								<div class="invalid-feedback" th:errors="*{password}"></div>
+						</div>
+					</div>
+					<div class="mt-4">
+						<button type="submit" class="btn btn-primary" style="width: 100%">
+							<i class="bi-person-plus"></i> Sign UP
+						</button>
+					</div>
+					<div class="mt-2">
+						<a th:href="@{/signin}" class="btn btn-success"
+							style="width: 100%"> <i class="bi-person-check"></i> Sign IN
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div th:fragment="pagination (pagination)">
+		<div class="d-flex justify-content-end">
+
+			<div class="col-auto">
+				<select id="sizeChangeSelectForm" class="form-select">
+					<option th:each="size : ${pagination.sizes}"
+						th:selected="${#strings.equals(size,param.size)}"
+						th:value="${size}" th:text="${size}" />
+				</select>
+			</div>
+
+			<a th:href="@{${pagination.url}(page=0)} + ${pagination.params}"
+				th:classappend="${pagination.first} ? 'disabled'"
+				class="btn btn-outline-secondary me-2"> <i
+				class="bi-skip-backward"></i>
+			</a> <a
+				th:href="@{${pagination.url}(page=${pagination.current -1})} +${pagination.params}"
+				th:classappend="${pagination.first} ? 'disabled'"
+				class="btn btn-outline-secondary me-2"> <i class="bi-skip-start"></i>
+			</a> <a
+				th:href="@{${pagination.url}(page=${pageNum})} +${pagination.params}"
+				th:each="pageNum : ${pagination.pages}" th:text="${pageNum + 1}"
+				class="btn  me-2"
+				th:classappend="${pageNum == pagination.current} ? 'disabled btn-secondary' : 'btn-outline-secondary'">
+				1 </a> <a
+				th:href="@{${pagination.url}(page=${pagination.current+1})} +${pagination.params}"
+				th:classappend="${pagination.last} ? 'disabled'"
+				class="btn btn-outline-secondary me-2"> <i class="bi-skip-end"></i>
+			</a> <a
+				th:href="@{${pagination.url}(page=${pagination.total-1})} +${pagination.params}"
+				th:classappend="${pagination.last} ? 'disabled'"
+				class="btn btn-outline-secondary"> <i class="bi-skip-forward"></i>
+			</a>
+
+		</div>
+	</div>
+
+	<div th:fragment="balanceItemList(itemList,readonly)">
+		<div class="card mt-4">
+			<div class="card-header">
+				<span th:text="${itemList.header.type}"></span> Detail List
+			</div>
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>No.</th>
+							<th>Item Name</th>
+							<th class="text-end">Unit Price</th>
+							<th class="text-end">Quantity</th>
+							<th class="text-end">Price</th>
+							<th th:if="${readonly}"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="item,rowNum : ${itemList.validItem}">
+							<td th:text="${rowNum.index} + 1">1</td>
+							<td th:text="${item.item}">Java Basic</td>
+							<td th:text="${#numbers.formatInteger(item.unitPrice,3,'COMMA')}"
+								class="text-end">150000</td>
+							<td th:text="${item.quantity}" class="text-end">3</td>
+							<td
+								th:text="${#numbers.formatInteger(item.unitPrice * item.quantity,3,'COMMA')}"
+								class="text-end">450000</td>
+							<td th:if="${readonly}" class="text-center"><a
+								th:href="@{/user/balance-edit/delete-item(index=${rowNum.index})}">
+									<i class="bi-trash"></i>
+							</a></td>
+						</tr>
+					</tbody>
+					<tfood>
+						<tr th:unless="${readonly}">
+							<td colspan="3">Total</td>
+							<td class="text-end" th:text="${itemList.quantityTotal}"></td>
+							<td class="text-end" th:text="${itemList.total}"></td>
+							<td th:if="${readonly}"></td>
+						</tr>
+					</tfood>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
